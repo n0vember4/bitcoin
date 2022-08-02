@@ -390,7 +390,8 @@ public:
         strNetworkID =  CBaseChainParams::REGTEST;
         consensus.signet_blocks = false;
         consensus.signet_challenge.clear();
-        consensus.nSubsidyHalvingInterval = 150;
+        // Mining reward halving interval like mainnet, equivalent to 4 years
+        consensus.nSubsidyHalvingInterval = 210000;
         consensus.BIP16Exception = uint256();
         consensus.BIP34Height = 1; // Always active unless overridden
         consensus.BIP34Hash = uint256();
@@ -399,16 +400,20 @@ public:
         consensus.CSVHeight = 1;    // Always active unless overridden
         consensus.SegwitHeight = 0; // Always active unless overridden
         consensus.MinBIP9WarningHeight = 0;
-        consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        // Minimum difficulty like mainnet
+        consensus.powLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; // two weeks
         consensus.nPowTargetSpacing = 10 * 60;
-        consensus.fPowAllowMinDifficultyBlocks = true;
-        consensus.fPowNoRetargeting = true;
-        consensus.nRuleChangeActivationThreshold = 108; // 75% for testchains
-        consensus.nMinerConfirmationWindow = 144; // Faster than normal for regtest (144 instead of 2016)
+        // If true, if the last block was mined more than 20 minutes ago, would
+        // allow a minimum-difficulty block to be mined
+        consensus.fPowAllowMinDifficultyBlocks = false;
+        consensus.fPowNoRetargeting = false;
+        // Use the same two-week retargeting peiod as mainnet.
+        consensus.nRuleChangeActivationThreshold = 1815; // 90% of 2016
+        consensus.nMinerConfirmationWindow = 2016;
 
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
-        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 0;
+        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = Consensus::BIP9Deployment::NEVER_ACTIVE;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].min_activation_height = 0; // No activation delay
 
@@ -417,7 +422,8 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
         consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].min_activation_height = 0; // No activation delay
 
-        consensus.nMinimumChainWork = uint256{};
+        // Do not accept a chain with less work, same value as testnet
+        consensus.nMinimumChainWork = "0x00000000000000000000000000000000000000000000064728c7be6fe4b2f961";
         consensus.defaultAssumeValid = uint256{};
 
         pchMessageStart[0] = 0xfa;
@@ -440,10 +446,12 @@ public:
         vSeeds.clear();
         vSeeds.emplace_back("dummySeed.invalid.");
 
-        fDefaultConsistencyChecks = true;
+        // If true, perform checks on the block index and mempool. False like mainnet
+        fDefaultConsistencyChecks = false;
         fRequireStandard = true;
         m_is_test_chain = true;
-        m_is_mockable_chain = true;
+        // Disallow some testing features
+        m_is_mockable_chain = false;
 
         checkpointData = {
             {

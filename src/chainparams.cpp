@@ -423,7 +423,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].min_activation_height = 0; // No activation delay
 
         // Do not accept a chain with less work, same value as testnet
-        consensus.nMinimumChainWork = "0x00000000000000000000000000000000000000000000064728c7be6fe4b2f961";
+        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000064728c7be6fe4b2f961");
         consensus.defaultAssumeValid = uint256{};
 
         pchMessageStart[0] = 0xfa;

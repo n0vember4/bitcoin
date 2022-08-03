@@ -400,17 +400,18 @@ public:
         consensus.CSVHeight = 1;    // Always active unless overridden
         consensus.SegwitHeight = 0; // Always active unless overridden
         consensus.MinBIP9WarningHeight = 0;
-        // Minimum difficulty like mainnet
-        consensus.powLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        // Minimum difficulty (initially)
+        consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; // two weeks
         consensus.nPowTargetSpacing = 10 * 60;
         // If true, if the last block was mined more than 20 minutes ago, would
         // allow a minimum-difficulty block to be mined
         consensus.fPowAllowMinDifficultyBlocks = false;
+        // Enable difficulty adjustment
         consensus.fPowNoRetargeting = false;
         // Use the same two-week retargeting peiod as mainnet.
         consensus.nRuleChangeActivationThreshold = 1815; // 90% of 2016
-        consensus.nMinerConfirmationWindow = 2016;
+        consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan/nPowTargetSpacing
 
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = Consensus::BIP9Deployment::NEVER_ACTIVE;
@@ -422,8 +423,8 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
         consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].min_activation_height = 0; // No activation delay
 
-        // Do not accept a chain with less work, same value as testnet
-        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000064728c7be6fe4b2f961");
+        // Initially, there will be no work in the chain (genesis block)
+        consensus.nMinimumChainWork = uint256{};
         consensus.defaultAssumeValid = uint256{};
 
         pchMessageStart[0] = 0xfa;

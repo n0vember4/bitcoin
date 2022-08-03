@@ -7,10 +7,10 @@ The only changed source file is `src/chainparams.cpp`.
 To compile with Docker, build the image with
 `docker build -f build-docker/Dockerfile -t difficulty .`, and run the
 container, e.g., as
-`docker run -it [-v <somewhere>:<somewhere>] difficulty /bin/bash`.
+`docker run -it -v <volume>:<path> difficulty`.
 
 Inside the container, execute either `build-docker/linux.sh` or
 `build-docker/windows.sh`.
 
-Then put the compiled binaries, which are in `./linux` or `./windows`, to the
+Then move the compiled binaries, which are in `./linux` or `./windows`, to the
 mounted volume or use `docker cp` from outside the container.

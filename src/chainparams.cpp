@@ -402,16 +402,17 @@ public:
         consensus.MinBIP9WarningHeight = 0;
         // Minimum difficulty (initially)
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; // two weeks
+        // Check if the last 144 blocks took on average 10 minutes per block
+        // (24 hours in total) for difficulty adjustment
+        consensus.nPowTargetTimespan = 24 * 60 * 60;
         consensus.nPowTargetSpacing = 10 * 60;
         // If true, if the last block was mined more than 20 minutes ago, would
         // allow a minimum-difficulty block to be mined
         consensus.fPowAllowMinDifficultyBlocks = false;
         // Enable difficulty adjustment
         consensus.fPowNoRetargeting = false;
-        // Use the same two-week retargeting peiod as mainnet.
-        consensus.nRuleChangeActivationThreshold = 1815; // 90% of 2016
-        consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan/nPowTargetSpacing
+        consensus.nRuleChangeActivationThreshold = 108;
+        consensus.nMinerConfirmationWindow = 144;
 
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = Consensus::BIP9Deployment::NEVER_ACTIVE;

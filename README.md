@@ -1,5 +1,5 @@
-# Regtest with Testnet Difficulty
-The difficulty adjusts automatically like in testnet (and mainnet).
+# Regtest with difficulty-adjusting PoW
+The difficulty adjusts automatically like in mainnet/testnet.
 
 The only changed source file is `src/chainparams.cpp`.
 

@@ -390,8 +390,7 @@ public:
         strNetworkID =  CBaseChainParams::REGTEST;
         consensus.signet_blocks = false;
         consensus.signet_challenge.clear();
-        // Mining reward halving interval like mainnet, equivalent to 4 years
-        consensus.nSubsidyHalvingInterval = 210000;
+        consensus.nSubsidyHalvingInterval = 500;
         consensus.BIP16Exception = uint256();
         consensus.BIP34Height = 1; // Always active unless overridden
         consensus.BIP34Hash = uint256();
@@ -408,9 +407,9 @@ public:
         consensus.nPowTargetSpacing = 10 * 60;
         // If true, if the last block was mined more than 20 minutes ago, would
         // allow a minimum-difficulty block to be mined
-        consensus.fPowAllowMinDifficultyBlocks = false;
-        // Enable difficulty adjustment
-        consensus.fPowNoRetargeting = false;
+        consensus.fPowAllowMinDifficultyBlocks = true;
+        // Enable/disable difficulty adjustment
+        consensus.fPowNoRetargeting = true;
         consensus.nRuleChangeActivationThreshold = 108;
         consensus.nMinerConfirmationWindow = 144;
 

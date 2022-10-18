@@ -449,7 +449,7 @@ public:
 
         // If true, perform checks on the block index and mempool. False like mainnet
         fDefaultConsistencyChecks = false;
-        fRequireStandard = true;
+        fRequireStandard = false;
         m_is_test_chain = true;
         // Disallow some testing features
         m_is_mockable_chain = false;
